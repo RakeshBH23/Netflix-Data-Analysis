@@ -52,22 +52,6 @@ The following visualizations were created to analyze the dataset:
 - **Python** (Pandas, NumPy, Matplotlib, Seaborn, Plotly, Scikit-learn, WordCloud, GeoPandas)
 - **Google Colabe** for exploratory data analysis
 
-## 🚀 How to Run the Project
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/Netflix-Data-Analysis.git
-   cd Netflix-Data-Analysis
-   ```
-2. Install required dependencies:
-   ```bash
-   pip install pandas numpy matplotlib seaborn plotly scikit-learn wordcloud geopandas
-   ```
-3. Run the Jupyter Notebook:
-   ```bash
-   Google Colab
-   ```
-4. Open the analysis notebook and execute the cells to generate visualizations.
-
 ## 📢 Contribution
 Feel free to contribute by adding new insights, improving visualizations, or optimizing the code. Fork the repository, create a new branch, and submit a pull request.
 
