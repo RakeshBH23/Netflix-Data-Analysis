@@ -1,137 +1,77 @@
-# Netflix Data Analysis 📊
+# Netflix Data Analysis
 
-## Overview
-This project performs an in-depth analysis of Netflix's content dataset, exploring trends, distributions, and key insights about the platform's shows and movies.
+## 📌 Overview
+This project analyzes Netflix content data to explore trends in movies and TV shows. Using Python, various visualizations and clustering techniques are applied to uncover insights into the distribution of content types, top directors, actors, and release trends over time.
 
-## Dataset 📂
-- The dataset contains information about Netflix titles, including type, release year, director, cast, country, duration, genre, and rating.
-- File: `Netflix-Data-Analysis.csv`
+## 📂 Dataset
+The dataset used in this project is available at:
+[Netflix Data](https://raw.githubusercontent.com/RakeshBH23/Netflix-Data-Analysis/main/Netflix-Data-Analysis.csv)
 
-## Features & Analysis 🔍
-### 1️⃣ Data Overview & Missing Values
-```python
-missing_values = content_df.isnull().sum()
-sns.barplot(x=missing_values.index, y=missing_values.values)
-plt.xticks(rotation=90)
-plt.title('Missing Values in Each Column')
-plt.show()
-```
+### Columns in the Dataset:
+- **show_id**: Unique ID for each title
+- **type**: Movie or TV Show
+- **title**: Title of the content
+- **director**: Director(s) of the content
+- **cast**: Cast members
+- **country**: Country of production
+- **release_year**: Year the content was released
+- **duration**: Duration in minutes or seasons
+- **listed_in**: Genre(s) of the content
 
-### 2️⃣ Content Distribution
-```python
-sns.countplot(x='type', data=content_df)
-plt.title('Distribution of Content Types')
-plt.show()
-```
+## 📊 Data Analysis & Visualizations
+The following visualizations were created to analyze the dataset:
 
-### 3️⃣ Top Directors & Cast
-```python
-# Top Directors
-top_directors = content_df['director'].value_counts().head(10)
-sns.barplot(y=top_directors.index, x=top_directors.values)
-plt.title('Top 10 Directors by Number of Titles')
-plt.show()
+### 1️⃣ **Missing Values in Each Column**
+- A bar chart visualizing missing values across different columns.
 
-# Top Cast
-cast_members = content_df['cast'].dropna().str.split(', ').explode()
-top_cast = cast_members.value_counts().head(10)
-sns.barplot(y=top_cast.index, x=top_cast.values)
-plt.title('Top 10 Actors/Actresses')
-plt.show()
-```
+### 2️⃣ **Distribution of Content Types**
+- A pie chart showing the proportion of Movies vs. TV Shows on Netflix.
 
-### 4️⃣ Content by Country
-```python
-top_countries = content_df['country'].value_counts().head(10)
-sns.barplot(y=top_countries.index, x=top_countries.values)
-plt.title('Top 10 Countries by Number of Titles')
-plt.show()
-```
+### 3️⃣ **Top 10 Directors by Number of Titles**
+- A bar chart displaying the most prolific directors on Netflix.
 
-### 5️⃣ Release Year Analysis
-```python
-sns.histplot(content_df['release_year'], bins=20, kde=True)
-plt.title('Release Year Distribution')
-plt.show()
-```
+### 4️⃣ **Top 10 Actors/Actresses**
+- A stem plot highlighting the most featured actors and actresses.
 
-### 6️⃣ Ratings & Genres
-```python
-sns.countplot(y='rating', data=content_df, order=content_df['rating'].value_counts().index)
-plt.title('Content Rating Distribution')
-plt.show()
-```
+### 5️⃣ **Top 10 Countries by Number of Titles**
+- A choropleth map visualizing the geographical distribution of Netflix content.
 
-### 7️⃣ Duration Analysis
-```python
-# Movies
-movies = content_df[content_df['type'] == 'Movie']
-movies['duration'] = movies['duration'].str.replace(' min', '').astype(int)
-sns.histplot(movies['duration'], bins=20)
-plt.title('Movie Duration Distribution')
-plt.show()
+### 6️⃣ **Trend of Releases Over the Years**
+- A line plot illustrating the trend of content releases over time.
 
-# TV Shows
-tv_shows = content_df[content_df['type'] == 'TV Show']
-tv_shows['seasons'] = tv_shows['duration'].str.replace(' Season', '').str.replace('s', '').astype(int)
-sns.histplot(tv_shows['seasons'], bins=10)
-plt.title('Number of Seasons Distribution for TV Shows')
-plt.show()
-```
+### 7️⃣ **Word Cloud of Titles**
+- A circular-shaped word cloud generated from the titles of Netflix content.
 
-### 8️⃣ Word Cloud of Titles
-```python
-wordcloud = WordCloud(width=800, height=400, background_color='white').generate(' '.join(content_df['title']))
-plt.figure(figsize=(10, 5))
-plt.imshow(wordcloud, interpolation='bilinear')
-plt.axis('off')
-plt.title('Word Cloud of Titles')
-plt.show()
-```
+### 8️⃣ **3D Clustering of Movies**
+- A 3D scatter plot visualizing clustering of movies based on release year and duration.
 
-### 9️⃣ Clustering: Movies by Duration & Release Year
-```python
-from sklearn.cluster import KMeans
-import numpy as np
+### 9️⃣ **Top 3 Popular Categories Over Time**
+- A stacked area chart showing the most popular genres by release year.
 
-movies_filtered = movies.dropna(subset=['duration', 'release_year'])
-X = movies_filtered[['duration', 'release_year']]
-kmeans = KMeans(n_clusters=3, random_state=0).fit(X)
-movies_filtered['cluster'] = kmeans.labels_
+## 🛠️ Tech Stack
+- **Python** (Pandas, NumPy, Matplotlib, Seaborn, Plotly, Scikit-learn, WordCloud, GeoPandas)
+- **Google Colabe** for exploratory data analysis
 
-plt.figure(figsize=(12, 8))
-sns.scatterplot(data=movies_filtered, x='release_year', y='duration', hue='cluster', palette='viridis')
-plt.title('Clustering of Movies by Duration and Release Year')
-plt.xlabel('Release Year')
-plt.ylabel('Duration (minutes)')
-plt.show()
-```
+## 🚀 How to Run the Project
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/Netflix-Data-Analysis.git
+   cd Netflix-Data-Analysis
+   ```
+2. Install required dependencies:
+   ```bash
+   pip install pandas numpy matplotlib seaborn plotly scikit-learn wordcloud geopandas
+   ```
+3. Run the Jupyter Notebook:
+   ```bash
+   Google Colab
+   ```
+4. Open the analysis notebook and execute the cells to generate visualizations.
 
-### 🔟 Trend Analysis: Popular Categories Over Time
-```python
-df_exploded = content_df.assign(listed_in=content_df['listed_in'].str.split(', ')).explode('listed_in')
-popular_years = df_exploded.groupby(['release_year', 'listed_in']).size().reset_index(name='count')
-top_categories_by_year = popular_years.sort_values(['release_year', 'count'], ascending=[True, False]).groupby('release_year').head(3)
+## 📢 Contribution
+Feel free to contribute by adding new insights, improving visualizations, or optimizing the code. Fork the repository, create a new branch, and submit a pull request.
 
-plt.figure(figsize=(14, 8))
-sns.lineplot(data=top_categories_by_year, x='release_year', y='count', hue='listed_in', marker='o')
-plt.title('Top 3 Popular Categories Over Time')
-plt.xlabel('Year')
-plt.ylabel('Number of Titles')
-plt.legend(title='Category', bbox_to_anchor=(1.05, 1), loc='upper left')
-plt.show()
-```
-
-## Getting Started 🚀
-### Prerequisites
-- Python 3.8+
-- Jupyter Notebook or Google Colab
-- Required Libraries:
-  ```sh
-  pip install pandas seaborn matplotlib plotly wordcloud scikit-learn
-  ```
-
-## Contributing 🤝
-Feel free to open issues or submit pull requests to enhance the project.
+## 📝 License
+This project is for educational purposes only and follows an open-source license. You are free to use and modify it as needed.
 
 
