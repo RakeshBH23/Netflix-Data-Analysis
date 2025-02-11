@@ -131,17 +131,7 @@ plt.show()
   pip install pandas seaborn matplotlib plotly wordcloud scikit-learn
   ```
 
-### Running the Notebook
-1. Clone this repository:
-   ```sh
-   git clone https://github.com/your-username/Netflix-Data-Analysis.git
-   ```
-2. Open `Netflix_Analysis.ipynb` in Jupyter Notebook or Google Colab.
-3. Run the cells to analyze the dataset.
-
 ## Contributing 🤝
 Feel free to open issues or submit pull requests to enhance the project.
 
-## License 📝
-This project is open-source and available under the MIT License.
 
